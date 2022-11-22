@@ -1,4 +1,4 @@
-#textrank.py의 함수 모두 불러오기
+#textrank.py의 함수 모두 불러오기( networkx 라이브러리가 필요함 )
 from textrank import *
 
 # 파일 열기 (나중에 경로 바꿔야 함), w는 write의 약자. w썼을 때 입력 가능.
