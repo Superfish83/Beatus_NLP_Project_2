@@ -2,7 +2,7 @@
 from textrank import *
 
 # 파일 열기 (나중에 경로 바꿔야 함), w는 write의 약자. w썼을 때 입력 가능.
-f = open('C:/Users/홍준혁/test2.txt', 'w')
+f = open('C:/Users/홍준혁/inputtext.txt', 'w')
 # 파일에 텍스트 쓰기
 f.write(input())
 # 파일 닫기
@@ -13,7 +13,7 @@ f.close()
 tr = TextRank(window=5, coef=1)
 print('Load...')
 stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV'), ('없', 'VV') ])
-tr.load(RawTaggerReader('test2.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
+tr.load(RawTaggerReader('inputtext.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
 print('Build...')
 tr.build()
 kw = tr.extract(0.1)
@@ -21,6 +21,6 @@ for k in sorted(kw, key=kw.get, reverse=True):
     print("%s\t%g" % (k, kw[k]))
 
 #다시 쓸 수 있도록 파일 정리 작업
-f = open('C:/Users/홍준혁/test2.txt', 'w')
+f = open('C:/Users/홍준혁/inputtext.txt', 'w')
 f.write("")
 f.close()
