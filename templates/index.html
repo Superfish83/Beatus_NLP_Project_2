@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beatus NLP Project</title>
+
+    <!-- 1. 모바일용 css -->
+    <!-- <link rel="stylesheet" href="./design_mobile.css" media="(max-width:600px)"> -->
+ 
+    <!-- 2. 데스크탑용 외부 스타일시트 적용 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}" media="(min-width:600px)">
+</head>
+<body>
+    
+    <div id="page">
+ 
+        <header>
+            <div id="logo">
+                <img src="https://www.cnsa.hs.kr/images/hpw/common/logo.gif" alt="Logo" width="150" height="40" href="./index.html">
+            </div>
+
+            <div id="top_menu">
+                <h1> 2022 Beatus 인공지능팀 프로젝트 </h1>
+            </div>
+ 
+        </header>
+ 
+        <article id="content">
+            <section id="main">
+                <div class="input-box">
+                    <div class="input-box item1">
+                        <form action="백엔드">
+                            <strong>입력</strong>
+                            <input id="input1" type="text" class="upload-line" placeholder="말을 입력하세요" >
+                            <input id="input2" type="submit" value="제출">
+                        </form>
+                    </div>
+                    <!--처리 코드 추가-->
+                </div>
+            </section>
+        </article>
+        
+        <!--
+        <article id="content">
+            <section id="main">
+                <div class="input-box">
+                    <div class="input-box item1">
+                        <form action="백엔드 url일걸">
+                            <strong>원하는 코드를 만들어줄 말을 입력하세요.</strong>
+                            <br>
+                            <input id="input1" type="text" class="upload-line" placeholder="말을 입력하세요" >
+                            <input id="input2" type="submit" value="제출">
+                        </form>
+                        <br>
+                        <a href="./info.html" id="howtouse">어떻게 쓰나요?</a>
+                    </div>  
+                    <div class="input-box item2">
+                        <output name="result" for="code">결과 출력</output>
+                    </div>
+                </div>
+
+            </section>
+ 
+        </article>
+        -->
+        <footer>
+            Copyright2022. CNLearning all right reserved.
+        </footer>
+ 
+    </div>
+</body>
+</html>

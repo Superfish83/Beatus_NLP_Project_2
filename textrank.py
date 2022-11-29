@@ -1,5 +1,6 @@
 import networkx
 import re
+import konlpy
  
 class RawSentence:
     def __init__(self, textIter):
@@ -25,6 +26,20 @@ class RawSentenceReader:
             for s in map(lambda a, b: a + b, ch[::2], ch[1::2]):
                 if not s: continue
                 yield s
+
+class ListTaggerReader: # <- 추가한 클래스(리스트로부터 문장 읽기)
+    def __init__(self, sentences):
+        self.sentences = sentences
+        from konlpy.tag import Komoran
+        self.tagger = Komoran()
+        self.rgxSplitter = re.compile('([.!?:](?:["\']|(?![0-9])))')
+ 
+    def __iter__(self):
+        for line in self.sentences:
+            ch = self.rgxSplitter.split(line)
+            for s in map(lambda a,b:a+b, ch[::2], ch[1::2]):
+                if not s: continue
+                yield self.tagger.pos(s)
  
 class RawTagger:
     def __init__(self, textIter, tagger = None):
@@ -150,7 +165,7 @@ class TextRank:
                 if pmi: pairness[k, l] = pmi
  
         for (k, l) in sorted(pairness, key=pairness.get, reverse=True):
-            print(k[0], l[0], pairness[k, l])
+            #print(k[0], l[0], pairness[k, l])
             if k not in startOf: startOf[k] = (k, l)
  
         for (k, l), v in pairness.items():
