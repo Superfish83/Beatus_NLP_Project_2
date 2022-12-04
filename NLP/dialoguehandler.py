@@ -1,8 +1,9 @@
 import torch
 from transformers import PreTrainedTokenizerFast
 from transformers import BartForConditionalGeneration
-from textrank import *
+from NLP.textrank import *
 import time
+import random
 
 class DialogueHandler:
 
@@ -12,6 +13,8 @@ class DialogueHandler:
 
         self.saved_explanation = []
         self.is_explaining = False
+
+        self.idle_dlgs = ['', '오...', '그렇구나~']
 
     def tr_keyword(self):
         tr = TextRank(window=5, coef=1)
@@ -54,7 +57,6 @@ class DialogueHandler:
                 output += '\n이 있겠네~'
                 state += 1
             elif state == 101:
-                time.sleep(3)
                 output += '이제 네가 설명해준 내용을 요약해 볼게!'
                 state += 1
             elif state == 102:
@@ -68,13 +70,15 @@ class DialogueHandler:
                 self.is_explaining = True
                 output += '좋아, 설명해 봐!'
                 state = 0
+            elif inp == '설명 끝':
+                self.is_explaining = False
+                output += '설명 잘 들었어!'
+                state = 100
             elif self.is_explaining:
                 self.saved_explanation.append(inp)
+                output += self.idle_dlgs[random.randint(0,len(self.idle_dlgs)-1)]
                 state = 0
-            if inp == '설명 끝':
-                self.is_explaining = False
-                output += '오~ 설명 잘 들었어'
-                state = 100
+            
         
         return output, state
 

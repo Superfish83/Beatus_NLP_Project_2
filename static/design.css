@@ -4,7 +4,7 @@ a{text-decoration: none;} /* 링크에 밑줄 같은거 제거*/
 header{
     width: 100%;
     height: 95px;
-    background-color: #552433;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(19,181,234,1) 100%);
  
     /* header 안에 요소들을 모두 absolute 포지션으로 배치할 것이라서 */
     /* absolute 요소가 header의 좌상단을 기준으로 하려면 */
@@ -49,8 +49,7 @@ nav li a{color: white;}
 .input-box{
     width: 100%;
     height: 500px;
-}
-.input-box .item1{
+    align-self: center  ;
     float: center;
     width: 70%;
     height: 500px;
@@ -61,40 +60,6 @@ nav li a{color: white;}
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
-    
-}
-
-.input-box .item2{
-    float: right;
-    width: 43%;
-    height: 500px;
-    border: 2px solid black;
-    box-sizing: border-box;
-    border-radius: 30px;
-    padding: 50px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-}
-/*form 꾸미기*/
-#input1{
-    width: 50%;
-    height: 50px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 2px solid black;
-}
-#input2{
-    width: 20%;
-    height: 55px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 2px solid black;
-}
-#howtouse:hover{
-    color: blue;
 }
 
 /* footer 영역 */
