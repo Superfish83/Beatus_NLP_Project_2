@@ -22,10 +22,10 @@ def template(title, content, auto_submit = None):
             </div>
         </header>
         
-        <article id="content">
-            {content}
+        <article id="content" style="background-color: #9EC3E3">
+        <div>{content}</div>
         </article>
-
+        
         <footer>
             <p>Made by 김연준, 홍준혁</p>
         </footer>
@@ -106,12 +106,14 @@ def chat():
             chatting = getTextForm(username, new_state)
 
             # 채팅 내역
+            # css 
             if usertext != '':
                 chat_history[username] += f'''
-                    <p>[{username}] {usertext}</p>'''
+                <div style="width=100%; border: 2px solid #09c;"><p style="border:1px solid blue; background-color:yellow; border-radius:40px; width:500px;">[{username}] {usertext}</p></div>
+                '''
             if output != '':
                 chat_history[username] += f'''
-                    <p>[BeatusChatBot] {output}</p> 
+                    <div style="width = 100%; border: 2px solid #09c; background-color: #9EC3E3;"><p style="background-color: white;">[BeatusChatBot] {output}</p></div>
                 '''
             chatting += chat_history[username]
 
