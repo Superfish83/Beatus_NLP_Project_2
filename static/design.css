@@ -84,3 +84,41 @@ footer{
 #font-test{
     font-family: "S-Core_Dream";
 } */
+
+.input{
+    margin: auto;
+    padding: 1%;
+    background-color: aqua;
+    width: 90%;
+}
+
+.chat{
+    margin: auto;
+    width: 50%;
+    height: 300px;
+}
+
+.chat-username{
+    font-size: 20px;
+    color:navy;
+}
+
+.chattext-user{
+    border:1px solid rgb(0, 0, 0);
+    background-color:yellow; 
+    border-radius:10px; 
+    width:fit-content;
+    margin: 2px;
+    margin-left:auto;
+    padding: 3px;
+}
+
+.chattext-bot{
+    text-align: left;
+    border:1px solid rgb(0, 0, 0);
+    background-color:rgb(255, 255, 255); 
+    border-radius:10px; 
+    width:fit-content;
+    margin: 2px;
+    padding: 3px;
+}

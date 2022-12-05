@@ -3,6 +3,7 @@ app = Flask(__name__)
 
 from NLP.dialoguehandler import DialogueHandler
 dlgHandler = DialogueHandler()
+botname = 'BeatusChatBot'
 
 def template(title, content, auto_submit = None):
     t = f'''<!doctype html>
@@ -22,8 +23,8 @@ def template(title, content, auto_submit = None):
             </div>
         </header>
         
-        <article id="content" style="background-color: #9EC3E3">
-        <div>{content}</div>
+        <article id="content">
+            {content}
         </article>
         
         <footer>
@@ -43,7 +44,7 @@ def getTextForm(username, dlg_state):
     form = ''
     if dlg_state < 100: # 사용자에게 채팅 입력을 받을 때
         form = f'''
-            <form name = "getUserText" action="/chat/" method="POST">
+            <form class = "input" name = "getUserText" action="/chat/" method="POST">
                 <input type="textarea" name="usertext" placeholder="채팅 입력"></textarea>
                 <input type="hidden" name="current_username" value={username}>
                 <input type="hidden" name="dlg_state" value={dlg_state}>
@@ -51,13 +52,32 @@ def getTextForm(username, dlg_state):
             </form>'''
     else: # 챗봇이 계속 말할 때 (입력받는 것 없이 form 제출)
         form = f'''
-            <form name = "getUserText" action="/chat/" method="POST">
+            <form class = "input" name = "getUserText" action="/chat/" method="POST">
                 <input type="textarea" name="usertext" placeholder="채팅 입력"></textarea>
                 <input type="hidden" name="current_username" value={username}>
                 <input type="hidden" name="dlg_state" value={dlg_state}>
             </form>
             '''
     return form
+
+def getTextTemplate(name, text):
+    if text == '':
+        return ''
+
+    if name != botname: #사용자의 입력
+        return f'''
+            <div>
+                <p class="chattext-user">{text}</p>
+            </div>
+        '''
+    else: #봇의 입력
+        return f'''
+            <div>
+                <p class="chat-username">{name}</p>
+                <p class="chattext-bot">{text}</p>
+            </div>
+        '''
+
 
 @app.route('/')
 def home():
@@ -86,14 +106,15 @@ def chat():
         if 'username' in request.form.keys():
             username = request.form['username']
 
-            #채팅 입력 form
-            chatting = getTextForm(username, 1)
+            if username == botname:
+                return '다른 이름을 설정하세요!'
 
             #채팅 내역
-            chat_history[username] = f'''
-                <p>[BeatusChatBot] Hello, {username}!</p> 
-            '''
+            chat_history[username] = getTextTemplate(botname, f'안녕, {username}!')
             chatting += chat_history[username]
+            
+            #채팅 입력 form
+            chatting += getTextForm(username, 1)
 
         # 채팅을 입력했을 때 -> dlgHandler를 통해 응답 받은 후 출력
         elif 'usertext' in request.form.keys():
@@ -102,26 +123,21 @@ def chat():
             dlg_state = int(request.form['dlg_state'])
             output, new_state = dlgHandler.handle_chat(usertext, dlg_state)
 
-            # 채팅 입력 form
-            chatting = getTextForm(username, new_state)
-
             # 채팅 내역
-            # css 
-            if usertext != '':
-                chat_history[username] += f'''
-                <div style="width=100%; border: 2px solid #09c;"><p style="border:1px solid blue; background-color:yellow; border-radius:40px; width:500px;">[{username}] {usertext}</p></div>
-                '''
-            if output != '':
-                chat_history[username] += f'''
-                    <div style="width = 100%; border: 2px solid #09c; background-color: #9EC3E3;"><p style="background-color: white;">[BeatusChatBot] {output}</p></div>
-                '''
+            chat_history[username] += getTextTemplate(username, usertext)
+            chat_history[username] += getTextTemplate(botname, output)
             chatting += chat_history[username]
+
+            # 채팅 입력 form
+            chatting += getTextForm(username, new_state)
 
             # 대화 state 값이 100 이상일 때 채팅 입력 form 자동 제출
             if new_state >= 100:
                 autoSubmitForm = 'getUserText'
 
-        return template('Chat Page', chatting, auto_submit = autoSubmitForm)
+        t = '<div class="chat">'
+        t += template('Chat Page', chatting, auto_submit = autoSubmitForm) + '</div>'
+        return t
 
     elif request.method == 'GET':
         return 'ERROR'
