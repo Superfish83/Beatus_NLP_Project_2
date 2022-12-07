@@ -181,7 +181,7 @@ def related_work():
 
 #외부 IP주소로 접속
 if __name__ == '__main__':
-    app.run(host='158.247.202.13')
+    app.run(host='0.0.0.0')
 
 #localhost 접속
 #if __name__ == '__main__':
