@@ -178,5 +178,11 @@ def chat():
 def related_work():
     return render_template('related_work.html')
 
+
+#외부 IP주소로 접속
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='158.247.202.13', debug=True)
+
+#localhost 접속
+#if __name__ == '__main__':
+#    app.run(debug=True)
